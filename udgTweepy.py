@@ -9,7 +9,6 @@ client = tweepy.Client(keys.BEARER_TOKEN, keys.API_KEY, keys.API_KEY_SECRET, key
 auth = tweepy.OAuth1UserHandler(keys.API_KEY,keys.API_KEY_SECRET, keys.ACCESS_TOKEN, keys.ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth)
 
-previous_status = {}
 #goal with this is to store the name as a key and the status from the previous tweet as the pair
 #Maybe only if out, questionable, upgrade, downgrade, no retweets or replies too
 
@@ -22,6 +21,7 @@ previous_status = {}
 ####
 class MyStream(tweepy.StreamingClient):
     def on_tweet(self, tweet):
+        time.sleep(1)
         set = 0
         for player in players.all_stars:
             if player.upper() in tweet.text.upper():
@@ -42,6 +42,10 @@ class MyStream(tweepy.StreamingClient):
                     discord.post(content=tweet.text)
                     #end of discord
                     break
+        if "KEY NEWS TO" in tweet.text.upper():
+            discord = discord = Discord(url="https://discordapp.com/api/webhooks/1003384743359950988/3BzT7fzJMOniP9bHx05DlUSOgl2rNABsTVmP8Jws0eadag4OluQNuySCbOcilwi8AUdb")
+            image_url = tweet.entities['media'][0]['media_url']
+            print(image_url)
 
 
 stream = MyStream(bearer_token=keys.BEARER_TOKEN)
