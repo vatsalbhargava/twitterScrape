@@ -44,8 +44,8 @@ class MyStream(tweepy.StreamingClient):
                     break
         if "KEY NEWS TO" in tweet.text.upper():
             discord = discord = Discord(url="https://discordapp.com/api/webhooks/1003384743359950988/3BzT7fzJMOniP9bHx05DlUSOgl2rNABsTVmP8Jws0eadag4OluQNuySCbOcilwi8AUdb")
-            image_url = tweet.entities['media'][0]['media_url']
-            print(image_url)
+            tweet_url = "https://twitter.com/{}/status/{}".format(tweet.user.screen_name, tweet.id)
+            discord.post(content="Find the daily news report with the following link: " + tweet_url)
 
 
 stream = MyStream(bearer_token=keys.BEARER_TOKEN)
